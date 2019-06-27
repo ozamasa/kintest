@@ -7,17 +7,21 @@ class PicturesController < ApplicationController
     app = ENV["KINTONE_APP"]
     id = ENV["KINTONE_ID"]
 
-    fields = ["name", "file", "作成日時"]
-    query = Kintone::Query.new { f("作成日時") == today }  #limit 5
+    file = ENV["KINTONE_FIELD_FILE"]
+    title = ENV["KINTONE_FIELD_TITLE"]
+    created_at = ENV["KINTONE_FIELD_CREATED"]
+
+    fields = [ file, title, created_at ]
+    query = Kintone::Query.new { f(created_at) == today }  #limit 5
 
     @files = []
     api.records.get(app, query, fields)["records"].each do |record|
-      value = record["file"]["value"].first
-      h = {}
-      h[:file] = api.file.get(record["file"]["value"].first["fileKey"])
-      h[:name] = record["name"]["value"]
-      h[:created_at] = record["作成日時"]["value"]
-      @files << h
+      @files << Hash[
+        file:       (api.file.get(record[file]["value"].first["fileKey"]) rescue nil),
+        type:       (record[file]["value"].first["contentType"] rescue nil),
+        title:      (record[title]["value"] rescue nil),
+        created_at: (record[created_at]["value"] rescue nil)
+      ]
     end
   end
 
