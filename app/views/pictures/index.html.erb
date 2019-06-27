@@ -1,0 +1,36 @@
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+<% @files.each do |file| %>
+<div class="swiper-slide" style="text-align: center;">
+<img src='data:image/jpeg;base64,<%= Base64.encode64(file[:file]) %>' width='80%'>
+<br><%= file[:name] %>
+<br><%= Time.zone.parse(file[:created_at]).in_time_zone('Tokyo') %>
+</div>
+<% end %>
+  </div>
+  <div class="swiper-pagination"></div>
+
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<script>
+var mySwiper = new Swiper('.swiper-container', {
+  autoHeight: true,
+  loop: true,
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+    reverseDirection: false
+  },
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev'
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    type: 'bullets',
+    clickable: true
+  }
+});
+</script>
