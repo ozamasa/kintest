@@ -5,14 +5,13 @@ class PicturesController < ApplicationController
     
     api = Kintone::Api.new(ENV["KINTONE_HOST"], ENV["CYBOZU_API_TOKEN"])
     app = ENV["KINTONE_APP"]
-    id = ENV["KINTONE_ID"]
 
     file = ENV["KINTONE_FIELD_FILE"]
     title = ENV["KINTONE_FIELD_TITLE"]
     created_at = ENV["KINTONE_FIELD_CREATED"]
 
-    fields = [ file, title, created_at ]
     query = Kintone::Query.new { f(created_at) == today }  #limit 5
+    fields = [ file, title, created_at ]
 
     @files = []
     api.records.get(app, query, fields)["records"].each do |record|
