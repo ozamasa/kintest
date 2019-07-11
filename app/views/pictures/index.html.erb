@@ -1,14 +1,27 @@
+<div class="container">
 <% @files.each do |file| %>
-<% time = Time.zone.parse(file[:created_at]).in_time_zone('Tokyo') %><%#= file[:title] %>
-<%= time.strftime("%Y年%m月%d日(#{%w(日 月 火 水 木 金 土)[time.wday]}) %H時%M分") %><br>
-<% if file[:file1].present? %>
-<img src='data:<%= file[:type1] %>;base64,<%= Base64.encode64(file[:file1]) %>' width='200'></a>
+    <div class="row">
+        <div class="col-xs-12">
+		<% time = Time.zone.parse(file[:created_at]).in_time_zone('Tokyo') %><%#= file[:title] %>
+		<%= time.strftime("%Y年%m月%d日(#{%w(日 月 火 水 木 金 土)[time.wday]})") %><br>
+		</div>
+	</div>
+    <div class="row">
+		<div class="col-xs-4">
+		<% if file[:file1].present? %>
+		<img src='data:<%= file[:type1] %>;base64,<%= Base64.encode64(file[:file1]) %>' class='img-responsive'></a>
+		<% end %>
+		</div>
+		<div class="col-xs-4">
+		<% if file[:file2].present? %>
+		<img src='data:<%= file[:type2] %>;base64,<%= Base64.encode64(file[:file2]) %>' class='img-responsive'>
+		<% end %>
+		</div>
+		<div class="col-xs-4">
+		<% if file[:file3].present? %>
+		<img src='data:<%= file[:type3] %>;base64,<%= Base64.encode64(file[:file3]) %>' class='img-responsive'>
+		<% end %>
+		</div>
+	</div>
 <% end %>
-<% if file[:file2].present? %>
-<img src='data:<%= file[:type2] %>;base64,<%= Base64.encode64(file[:file2]) %>' width='200'>
-<% end %>
-<% if file[:file3].present? %>
-<img src='data:<%= file[:type3] %>;base64,<%= Base64.encode64(file[:file3]) %>' width='200'>
-<% end %>
-<br>
-<% end %>
+</div>
