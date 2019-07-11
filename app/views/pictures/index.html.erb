@@ -1,35 +1,14 @@
-<div class="swiper-container">
-  <div class="swiper-wrapper">
 <% @files.each do |file| %>
-<div class="swiper-slide" style="text-align: center">
-<img src='data:<%= file[:type] %>;base64,<%= Base64.encode64(file[:file]) %>' width='80%'>
-<br><%= file[:title] %>
-<br><%= Time.zone.parse(file[:created_at]).in_time_zone('Tokyo') %>
-</div>
+<% time = Time.zone.parse(file[:created_at]).in_time_zone('Tokyo') %><%#= file[:title] %>
+<%= time.strftime("%Y年%m月%d日(#{%w(日 月 火 水 木 金 土)[time.wday]}) %H時%M分") %><br>
+<% if file[:file1].present? %>
+<img src='data:<%= file[:type1] %>;base64,<%= Base64.encode64(file[:file1]) %>' width='200'></a>
 <% end %>
-  </div>
-  <div class="swiper-pagination"></div>
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-</div>
-
-<script>
-var mySwiper = new Swiper('.swiper-container', {
-  autoHeight: true,
-  loop: true,
-  autoplay: {
-    delay: 3000,
-    disableOnInteraction: false,
-    reverseDirection: false
-  },
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev'
-  },
-  pagination: {
-    el: '.swiper-pagination',
-    type: 'bullets',
-    clickable: true
-  }
-});
-</script>
+<% if file[:file2].present? %>
+<img src='data:<%= file[:type2] %>;base64,<%= Base64.encode64(file[:file2]) %>' width='200'>
+<% end %>
+<% if file[:file3].present? %>
+<img src='data:<%= file[:type3] %>;base64,<%= Base64.encode64(file[:file3]) %>' width='200'>
+<% end %>
+<br>
+<% end %>
