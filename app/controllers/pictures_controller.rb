@@ -13,7 +13,7 @@ class PicturesController < ApplicationController
     file2 = ENV["KINTONE_FIELD_FILE2"]
     file3 = ENV["KINTONE_FIELD_FILE3"]
 
-    query = Kintone::Query.new { limit 5 } # { f(created_at) == today }
+    query = Kintone::Query.new { limit 7 } # { f(created_at) == today }
     fields = [ file1, file2, file3, title, created_at ].uniq
 
     @files = []
